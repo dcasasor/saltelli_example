@@ -43,13 +43,13 @@ def scatter_plot(ids, k_label):
 if __name__ == '__main__':
 
     # Data
+    k_1 = 3
+    k_m1 = 3
+
     sd_k1 = 0.3
     sd_km1 = 1
 
     timespan = np.linspace(0, 0.5)
-
-    k_1 = 3
-    k_m1 = 3
 
     num_samples = 256
 
@@ -60,6 +60,7 @@ if __name__ == '__main__':
     # Create model responses
     a_montecarlo = np.zeros(shape=(num_samples, len(timespan)))
     b_montecarlo = np.zeros_like(a_montecarlo)
+
     fig_mcarlo, ax_mcarlo = plt.subplots(figsize=(4.5, 2.81))
 
     for ind, constants in enumerate(zip(k1_normal, km1_normal)):
@@ -86,3 +87,6 @@ if __name__ == '__main__':
 
     fig_scat_km1.savefig(
             '../img/saltelli_example_scatter_km1.pdf', bbox_inches='tight')
+
+    # --------------- Sensitivity using linear regression ([A] vs k_1 and k_m1)
+
