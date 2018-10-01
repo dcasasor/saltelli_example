@@ -4,6 +4,17 @@
 Created on Wed Sep 26 15:20:41 2018
 
 @author: casasorozco
+
+Based on Saltelli, A. et al. Chem. Rev. 2012, 112 (5):
+    "Update 1 of: Sensitivity analysis for chemical models"
+
+The idea is to learn on the internal mechanics of sensitivity assessment by
+reproducing the results in the cited manuscript.
+
+This file contains the code for the solution of the (simple) dynamic model and
+its derivatives with respect to the uncertain parameters (Eqs. 1 to 7 in the
+manuscript).
+
 """
 
 from __future__ import division
@@ -97,11 +108,4 @@ if __name__ == '__main__':
 
     fig_der.savefig('../img/saltelli_example_der.pdf', bbox_inches='tight')
 
-
-
 #    scatter_ids = range(0, len(timespan), len(timespan)//4)
-
-
-
-
-
