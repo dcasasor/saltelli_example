@@ -106,6 +106,7 @@ if __name__ == '__main__':
 
     import statsmodels.api as sm
 
+    # Standarize inputs and outputs
     k1_std = (k1_normal - k_1)/sdev_k1
     km1_std = (km1_normal - k_m1)/sdev_km1
 
@@ -115,14 +116,17 @@ if __name__ == '__main__':
     a_std = (a_montecarlo - a_mean)/a_sdev
     a_std = a_std[:, 1:]  # originally, first column has no standard deviation
 
+    # Create input array for multiple linear regression
     X = np.column_stack((k1_std, km1_std))
 
+    # Initialize containers
     beta_coefficients = np.zeros(shape=(len(timespan) - 1, 2))
     confidence_k1 = np.zeros_like(beta_coefficients)
     confidence_km1 = np.zeros_like(beta_coefficients)
 
     r_squared_beta = np.zeros(len(timespan) - 1)
 
+    # Run linear regression at each time
     for ind, col in enumerate(a_std.T):
         y = col
         model = sm.OLS(y, X).fit()
@@ -132,6 +136,7 @@ if __name__ == '__main__':
         confidence_k1[ind] = model.conf_int()[0]
         confidence_km1[ind] = model.conf_int()[1]
 
+    # Plot
     fig_beta, axis_beta = plt.subplots()
 
     axis_beta.plot(timespan[1:], abs(beta_coefficients))
@@ -140,7 +145,6 @@ if __name__ == '__main__':
     confidence_k1 = abs(confidence_k1)
 
     # shaded area (confidence intervals)
-
     axis_beta.fill_between(timespan[1:],
                            confidence_k1[:, 0], confidence_k1[:, 1],
                            alpha=0.2)
