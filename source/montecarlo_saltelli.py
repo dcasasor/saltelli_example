@@ -84,8 +84,16 @@ if __name__ == '__main__':
         b_montecarlo[ind] = b_profile
 
         # Plot
-        ax_mcarlo.plot(timespan, a_profile, 'k', alpha=0.1)
-        ax_mcarlo.plot(timespan, b_profile, 'b', alpha=0.1)
+        ax_mcarlo.plot(timespan, a_profile, 'k', alpha=0.12, lw=0.2)
+        ax_mcarlo.plot(timespan, b_profile, 'b', alpha=0.12, lw=0.2)
+
+    a_nominal, b_nominal, _ = profiles(t_span=timespan, *(k_1, k_m1))
+    ax_mcarlo.plot(timespan, a_nominal, '--k', lw=0.8, label='A (nominal)')
+    ax_mcarlo.plot(timespan, b_nominal, '--b', lw=0.8, label='B (nominal)')
+
+    ax_mcarlo.set_xlabel('time')
+    ax_mcarlo.set_ylabel('[] (mol/L)')
+    ax_mcarlo.legend(loc='upper right')
 
     # Plot
     fig_mcarlo.savefig(
@@ -155,9 +163,8 @@ if __name__ == '__main__':
 
     axis_beta.set_xlabel('time')
 
-    axis_beta.legend((r'$\beta_{k_1}$',
-                      r'$\beta_{k_{-1}}$',
-                      r'$R^2_{[A]}$'),
-                     loc='best')
+    axis_beta.legend(
+            (r'$\beta_{k_1}$', r'$\beta_{k_{-1}}$', r'$R^2_{[A]}$'),
+            loc='best')
 
     fig_beta.savefig('../img/beta_linear.pdf', bbox_inches='tight')
